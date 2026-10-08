@@ -1,5 +1,7 @@
 package com.violencedetection.backend.controller;
 
+import com.violencedetection.backend.dto.LoginRequest;
+import com.violencedetection.backend.dto.LoginResponse;
 import com.violencedetection.backend.dto.RegisterRequest;
 import com.violencedetection.backend.service.AppUserService;
 import jakarta.validation.Valid;
@@ -27,6 +29,14 @@ public class AppUserController {
     public ResponseEntity<String> registerUser(@Valid @RequestBody RegisterRequest registerRequest)
     {
         return appUserService.registerUser(registerRequest);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginRequest loginRequest)
+    {
+        LoginResponse loginResponse=appUserService.loginUser(loginRequest);
+
+        return ResponseEntity.ok(loginResponse);
     }
 
 }
