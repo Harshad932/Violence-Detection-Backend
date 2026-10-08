@@ -3,7 +3,6 @@ package com.violencedetection.backend.controller;
 import com.violencedetection.backend.dto.RegisterRequest;
 import com.violencedetection.backend.service.AppUserService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,8 +10,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 public class AppUserController {
 
-    @Autowired
-    AppUserService appUserService;
+    private final AppUserService appUserService;
+
+    public AppUserController(AppUserService appUserService)
+    {
+        this.appUserService=appUserService;
+    }
 
     @GetMapping("/")
     public String hello()
