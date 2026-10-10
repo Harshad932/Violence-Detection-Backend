@@ -1,5 +1,6 @@
 package com.violencedetection.backend.service;
 
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +36,23 @@ public class JwtService {
                 .expiration(expiryDate)
                 .signWith(getSigninKey())
                 .compact();
+
+    }
+
+    public boolean isTokenValid(String token,String username)
+    {
+        String extractedUsername=extractUsername(token);
+        return extractedUsername.equals(username);
+    }
+
+    private String extractUsername(String token) {
+
+        return Jwts.parser()
+                .verifyWith(getSigninKey())
+                .build()
+                .parseEncryptedClaims(token)
+                .getPayload()
+                .getSubject();
 
     }
 
