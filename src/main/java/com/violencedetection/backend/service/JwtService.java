@@ -45,12 +45,12 @@ public class JwtService {
         return extractedUsername.equals(username);
     }
 
-    private String extractUsername(String token) {
+    public String extractUsername(String token) {
 
         return Jwts.parser()
                 .verifyWith(getSigninKey())
                 .build()
-                .parseEncryptedClaims(token)
+                .parseSignedClaims(token)
                 .getPayload()
                 .getSubject();
 
