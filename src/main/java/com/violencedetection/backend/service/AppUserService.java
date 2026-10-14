@@ -3,6 +3,7 @@ package com.violencedetection.backend.service;
 import com.violencedetection.backend.dto.LoginRequest;
 import com.violencedetection.backend.dto.LoginResponse;
 import com.violencedetection.backend.dto.RegisterRequest;
+import com.violencedetection.backend.dto.UserProfileResponse;
 import com.violencedetection.backend.exception.UserAlreadyExistsException;
 import com.violencedetection.backend.model.AppUser;
 import com.violencedetection.backend.repository.AppUserRepository;
@@ -67,6 +68,13 @@ public class AppUserService {
 
         return new LoginResponse(token);
 
+    }
+
+    public UserProfileResponse getCurrentUser(String username)
+    {
+        AppUser appUser=appUserRepository.findByUsername(username).orElseThrow(()->new RuntimeException("User Not Found"));
+
+        return new UserProfileResponse(appUser.getUserId(),appUser.getUsername(),appUser.getEmail());
     }
 
 }
