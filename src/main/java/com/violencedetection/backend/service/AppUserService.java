@@ -3,6 +3,7 @@ package com.violencedetection.backend.service;
 import com.violencedetection.backend.dto.LoginRequest;
 import com.violencedetection.backend.dto.LoginResponse;
 import com.violencedetection.backend.dto.RegisterRequest;
+import com.violencedetection.backend.exception.UserAlreadyExistsException;
 import com.violencedetection.backend.model.AppUser;
 import com.violencedetection.backend.repository.AppUserRepository;
 import org.springframework.http.HttpStatus;
@@ -35,12 +36,12 @@ public class AppUserService {
 
         if(appUserRepository.existsByUsername(registerRequest.getUsername()))
         {
-            return new ResponseEntity<>("Username Already Exists", HttpStatus.BAD_REQUEST);
+            throw new UserAlreadyExistsException("Username Already Exists");
         }
 
         if(appUserRepository.existsByEmail(registerRequest.getEmail()))
         {
-            return new ResponseEntity<>("Email Already Exists", HttpStatus.BAD_REQUEST);
+            throw new UserAlreadyExistsException("Email Already Exists");
         }
 
         AppUser appUser=new AppUser();
