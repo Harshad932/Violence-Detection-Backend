@@ -7,8 +7,6 @@ import com.violencedetection.backend.dto.UserProfileResponse;
 import com.violencedetection.backend.exception.UserAlreadyExistsException;
 import com.violencedetection.backend.model.AppUser;
 import com.violencedetection.backend.repository.AppUserRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -33,7 +31,7 @@ public class AppUserService {
         this.jwtService=jwtService;
     }
 
-    public ResponseEntity<String> registerUser(RegisterRequest registerRequest) {
+    public String registerUser(RegisterRequest registerRequest) {
 
         if(appUserRepository.existsByUsername(registerRequest.getUsername()))
         {
@@ -52,7 +50,7 @@ public class AppUserService {
 
         appUserRepository.save(appUser);
 
-        return new ResponseEntity<>("Registered Successfully",HttpStatus.OK);
+        return "Registered Successfully";
 
     }
 

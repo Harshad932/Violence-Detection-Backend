@@ -29,7 +29,9 @@ public class AppUserController {
     @PostMapping("/auth/register")
     public ResponseEntity<String> registerUser(@Valid @RequestBody RegisterRequest registerRequest)
     {
-        return appUserService.registerUser(registerRequest);
+        String message= appUserService.registerUser(registerRequest);
+
+        return ResponseEntity.status(201).body(message);
     }
 
     @PostMapping("/auth/login")
