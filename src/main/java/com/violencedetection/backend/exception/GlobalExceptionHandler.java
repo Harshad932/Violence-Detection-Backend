@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
@@ -43,6 +45,17 @@ public class GlobalExceptionHandler {
         ApiErrorResponse error=new ApiErrorResponse(HttpStatus.UNAUTHORIZED.value(), "Invalid username or password");
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<ApiErrorResponse> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException ex)
+    {
+
+        ApiErrorResponse error=new ApiErrorResponse(HttpStatus
+                .PAYLOAD_TOO_LARGE.value(), "Video File is too large . Please Upload a smaller video.");
+
+        return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE).body(error);
 
     }
 
